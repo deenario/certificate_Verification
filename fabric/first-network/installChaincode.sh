@@ -1,8 +1,8 @@
 #!/bin/bash
 
-sh ./byfn.sh down
+. ./byfn.sh down
 
-sh ./byfn.sh up -s couchdb -an
+. ./byfn.sh up -s couchdb -an
 
 docker exec cli peer chaincode install -n certificate -l golang -p github.com/chaincode/certificate -v 1.0.1
 
