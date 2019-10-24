@@ -48,7 +48,7 @@ exports.register = async (req, res, next) => {
                 if (resultQuery.length <= 0) {
 
                     const query = "insert into user " +
-                        "(email, password, user_type, reset_token, created_at, ) " +
+                        "(email, password, user_type, reset_token, created_at ) " +
                         "values " + "('" + email + "','" + hash + "','" + userType + "','" + null + "','"+createdAt+"')";
                     database.executeQuery(res, "User Successfully Created", query);
 
