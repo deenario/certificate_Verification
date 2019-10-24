@@ -4,7 +4,7 @@ const database = require("./utils");
 const fs = require('fs');
 const http = require('http');
 
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 80;
 
 app.set('port', port);
 const httpServer = http.createServer(app);
