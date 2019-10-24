@@ -55,8 +55,6 @@ exports.register = async (req, res, next) => {
                     readHTMLFile('/home/deenario/certificate_Verification/backend/email/registerUser.html', function (err, html) {
                         let template = handlebars.compile(html);
                         let replacements = {
-                            firstname: firstName,
-                            username: username,
                             email: email
                         };
                         let htmlToSend = template(replacements);
