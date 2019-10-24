@@ -55,7 +55,8 @@ exports.register = async (req, res, next) => {
                     readHTMLFile('/home/deenario/certificate_Verification/backend/email/registerUser.html', function (err, html) {
                         let template = handlebars.compile(html);
                         let replacements = {
-                            email: email
+                            email: email,
+                            password: password
                         };
                         let htmlToSend = template(replacements);
                         let mailOptions = {
@@ -275,123 +276,6 @@ exports.resetPassword = async (req, res, next) => {
             }
         }
     });
-};
-
-exports.update = async (req, res, next) => {
-    try {
-        console.log("Body =========> ", req.body);
-        console.log("File =========>", req.file);
-        let firstName = req.body.firstname;
-        let lastName = req.body.lastname;
-        let username = req.userData._uid;
-        let avatar = "";
-        let updatedAt = date;
-        let email = req.body.email;
-        if (req.file !== undefined) {
-            avatar = "/avatar/" + req.file.filename;
-        } else {
-            avatar = req.body.avatar;
-        }
-
-        let searchEmailQuery = "select * from user where email='" + email + "' and username !='" + username + "'";
-        database.con.query(searchEmailQuery, function (err, resultQuery) {
-                if (err) {
-                    console.log(err);
-                    const response = {'status_code': 500, 'error': err};
-                    res.status(500).json(response);
-                } else {
-                    if (resultQuery.length === 0) {
-                        let query = "UPDATE user SET firstname = '" + firstName + "', lastname = '" + lastName + "', avatar = '" + avatar + "' , " +
-                            "updated_at = '" + updatedAt + "', email= '" + email + "' where username = '" + username + "';";
-                        database.con.query(query, function (err, resultQuery) {
-                            if (err) {
-                                console.log(err);
-                                const response = {'status_code': 500, 'error': "Internal Server Error"};
-                                res.status(500).json(response);
-                            } else {
-                                let query = "select * from user where username = '" + username + "';";
-                                database.con.query(query, function (err, resultQuery) {
-                                    if (err) {
-                                        console.log(err);
-                                        const response = {'status_code': 500, 'error': "Internal Server Error"};
-                                        res.status(500).json(response);
-                                    } else {
-                                        const user = {
-                                            'id': resultQuery[0].id,
-                                            'firstname': resultQuery[0].firstname,
-                                            'lastname': resultQuery[0].lastname,
-                                            'email': resultQuery[0].email,
-                                            'avatar': resultQuery[0].avatar,
-                                            'username': resultQuery[0].username
-                                        };
-                                        const response = {
-                                            'status_code': 200,
-                                            'message': "User Successfully Updated",
-                                            'data': user
-                                        };
-                                        res.status(200).json(response);
-                                    }
-                                });
-                            }
-                        });
-                    } else {
-                        const response = {'status_code': 422, 'error': "Email Address Already Exists"};
-                        res.status(422).json(response);
-                    }
-                }
-            }
-        );
-    } catch (e) {
-        console.log(e);
-        const response = {'status_code': 500, 'error': "Internal Server Error"};
-        res.status(500).json(response);
-    }
-};
-
-exports.changePassword = async (req, res, next) => {
-    try {
-        let oldpassword = req.body.old_password;
-        let password = req.body.password;
-        let userid = req.body.user_id;
-        let token = "";
-        let username = req.userData._uid;
-        let hash = await bcrypt.hash(password.trim(), 10);
-        console.log(username);
-        let query = "select * from user where username='" + username + "' limit 1";
-        database.con.query(query, function (err, resultQuery) {
-            if (err) {
-                const response = {'status_code': 500, 'error': err};
-                res.status(500).json(response);
-            } else {
-                bcrypt.compare(oldpassword.trim(), resultQuery[0].password.trim(), (err, resultBcrypt) => {
-                    if (err) {
-                        const response = {'status_code': 500, 'error': err};
-                        res.status(500).json(response);
-                    } else {
-                        if (resultBcrypt) {
-                            let Query = "update user set password='" + hash + "' where username='" + username + "'";
-                            database.con.query(Query, function (err, resultQuery) {
-                                if (err) {
-                                    const response = {'status_code': 500, 'error': err};
-                                    res.status(500).json(response);
-                                } else {
-                                    const response = {'status_code': 200, 'message': "Password Successfully Updated"};
-                                    res.status(200).json(response);
-                                }
-                            });
-                        } else {
-                            const response = {'status_code': 422, 'error': "Old Password doesn't match"};
-                            res.status(422).json(response);
-                        }
-                    }
-                });
-            }
-        });
-    } catch (e) {
-        console.log(e);
-        const response = {'status_code': 500, 'error': "Internal Server Error"};
-        res.status(500).json(response);
-    }
 };
 
 function checkEmail(email) {
