@@ -52,7 +52,7 @@ exports.register = async (req, res, next) => {
                         "values " + "('" + email + "','" + hash + "','" + userType + "','" + null + "','"+createdAt+"')";
                     database.executeQuery(res, "User Successfully Created", query);
 
-                    readHTMLFile('/home/ubuntu/certificate_Verification/backendc/email/registerUser.html', function (err, html) {
+                    readHTMLFile('/home/deenario/certificate_Verification/backend/email/registerUser.html', function (err, html) {
                         let template = handlebars.compile(html);
                         let replacements = {
                             firstname: firstName,
@@ -201,7 +201,7 @@ exports.resetRequest = async (req, res, next) => {
                                     res.status(500).json(response);
                                 } else {
 
-                                    readHTMLFile('/home/ubuntu/certificate_Verification/backend/email/passwordReset.html', function (err, html) {
+                                    readHTMLFile('/home/deenario/certificate_Verification/backend/email/passwordReset.html', function (err, html) {
                                         let template = handlebars.compile(html);
                                         let replacements = {
                                             url: url
