@@ -143,7 +143,7 @@ exports.login = (req, res, next) => {
                                         , (err, token) => {
                                             const user = {
                                                 'id': resultQuery[0].id,
-                                                'email': resultQuery[0].email,]
+                                                'email': resultQuery[0].email,
                                             };
                                             let _token = {
                                                 'value': token,
