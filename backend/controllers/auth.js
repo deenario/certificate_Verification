@@ -116,7 +116,7 @@ exports.login = (req, res, next) => {
                         } else {
                             if (resultBcrypt) {
                                 if (is_mobile) {
-                                    jwt.sign({_uid: username}, process.env.JWTSECRET
+                                    jwt.sign({_uid: email}, process.env.JWTSECRET
                                         , (err, token) => {
                                             const user = {
                                                 'id': resultQuery[0].id,
@@ -137,7 +137,7 @@ exports.login = (req, res, next) => {
                                             res.status(200).json(response);
                                         });
                                 } else {
-                                    jwt.sign({_uid: username}, process.env.JWTSECRET, {expiresIn: '1h'}
+                                    jwt.sign({_uid: email}, process.env.JWTSECRET, {expiresIn: '1h'}
                                         , (err, token) => {
                                             const user = {
                                                 'id': resultQuery[0].id,
