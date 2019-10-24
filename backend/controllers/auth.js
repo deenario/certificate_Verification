@@ -33,16 +33,13 @@ exports.register = async (req, res, next) => {
     try {
         console.log("Body", req.body);
         console.log("File", req.file);
-        let firstName = req.body.firstname;
-        let lastName = req.body.lastname;
-        let avatar = "avatar/" + req.file.filename;
         let createdAt = date;
-        let updatedAt = date;
         let email = req.body.email ? req.body.email : "";
         let password = req.body.password ? req.body.password : "";
-        let username = req.body.username;
+        let userType = req.body.user_type;
         let hash = await bcrypt.hash(password.trim(), 10);
-        let query = "select * from user where username='" + username + "' limit 1";
+
+        let query = "select * from user where email='" + email + "' limit 1";
         database.con.query(query, function (err, resultQuery) {
             if (err) {
                 const response = {'status_code': 500, 'error': err};
@@ -50,55 +47,39 @@ exports.register = async (req, res, next) => {
             } else {
                 if (resultQuery.length <= 0) {
 
-                    let query = "select * from user where email='" + email + "' limit 1";
-                    database.con.query(query, function (err, resultQuery) {
-                        if (err) {
-                            const response = {'status_code': 500, 'error': err};
-                            res.status(500).json(response);
-                        } else {
-                            if (resultQuery.length <= 0) {
-                                const query = "insert into user " +
-                                    "(firstname, lastname, avatar, created_at, updated_at, email, password, username, reset_token) " +
-                                    "values " + "('" + firstName + "','" + lastName + "','" + avatar + "','" + createdAt + "'," +
-                                    "'" + updatedAt + "','" + email + "','" + hash + "','" + username + "','" + null + "')";
-                                database.executeQuery(res, "User Successfully Created", query);
+                    const query = "insert into user " +
+                        "(email, password, user_type, reset_token, created_at, ) " +
+                        "values " + "('" + email + "','" + hash + "','" + userType + "','" + null + "','"+createdAt+"')";
+                    database.executeQuery(res, "User Successfully Created", query);
 
-                                readHTMLFile('/home/ubuntu/whatthefake/backendServer/email/registerUser.html', function (err, html) {
-                                    let template = handlebars.compile(html);
-                                    let replacements = {
-                                        firstname: firstName,
-                                        username: username,
-                                        email: email
-                                    };
-                                    let htmlToSend = template(replacements);
-                                    let mailOptions = {
-                                        from: process.env.EMAIL,
-                                        to: email,
-                                        subject: 'User Registered',
-                                        html: htmlToSend
+                    readHTMLFile('/home/ubuntu/certificate_Verification/backendc/email/registerUser.html', function (err, html) {
+                        let template = handlebars.compile(html);
+                        let replacements = {
+                            firstname: firstName,
+                            username: username,
+                            email: email
+                        };
+                        let htmlToSend = template(replacements);
+                        let mailOptions = {
+                            from: process.env.EMAIL,
+                            to: email,
+                            subject: 'User Registered',
+                            html: htmlToSend
 
-                                    };
-                                    transporter.sendMail(mailOptions, function (error, info) {
-                                        if (error) {
-                                            console.log(error);
-                                        } else {
-                                            console.log("Email Sent", info.response);
-                                        }
-                                    });
-                                });
-
+                        };
+                        transporter.sendMail(mailOptions, function (error, info) {
+                            if (error) {
+                                console.log(error);
                             } else {
-                                res.status(500).json({
-                                    "status_code": 500,
-                                    "error": "Emails Already Exist"
-                                });
+                                console.log("Email Sent", info.response);
                             }
-                        }
+                        });
                     });
+
                 } else {
                     res.status(500).json({
                         "status_code": 500,
-                        "error": "Username Already Exist"
+                        "error": "Emails Already Exist"
                     });
                 }
             }
@@ -113,14 +94,15 @@ exports.register = async (req, res, next) => {
 
 exports.login = (req, res, next) => {
     try {
-        let username = req.body.username;
+        let email = req.body.email;
         let password = req.body.password;
-        let is_mobile = req.body.is_mobile;
+        let is_mobile = true;
         let query = "";
-        if (checkEmail(username)) {
-            query = "select * from user where email='" + username + "' limit 1";
+        if (checkEmail(email)) {
+            query = "select * from user where email='" + email + "' limit 1";
         } else {
-            query = "select * from user where username='" + username + "' limit 1";
+            const response = {'status_code': 404, 'error': "Not a Valid Email Address"};
+            res.status(404).json(response);
         }
         database.con.query(query, function (err, resultQuery) {
             if (err) {
@@ -140,11 +122,7 @@ exports.login = (req, res, next) => {
                                         , (err, token) => {
                                             const user = {
                                                 'id': resultQuery[0].id,
-                                                'firstname': resultQuery[0].firstname,
-                                                'lastname': resultQuery[0].lastname,
                                                 'email': resultQuery[0].email,
-                                                'avatar': resultQuery[0].avatar,
-                                                'username': resultQuery[0].username
                                             };
                                             let _token = {
                                                 'value': token
@@ -165,11 +143,7 @@ exports.login = (req, res, next) => {
                                         , (err, token) => {
                                             const user = {
                                                 'id': resultQuery[0].id,
-                                                'firstname': resultQuery[0].firstname,
-                                                'lastname': resultQuery[0].lastname,
-                                                'email': resultQuery[0].email,
-                                                'avatar': resultQuery[0].avatar,
-                                                'username': resultQuery[0].username
+                                                'email': resultQuery[0].email,]
                                             };
                                             let _token = {
                                                 'value': token,
@@ -205,114 +179,6 @@ exports.login = (req, res, next) => {
     }
 };
 
-exports.socialLogin = (req, res, next) => {
-    try {
-
-        console.log("Social Login");
-        let username = req.body.username;
-        let email = req.body.email;
-        let avatar = req.body.avatar;
-        let firstName = req.body.firstname;
-        let lastName = req.body.lastname;
-        let is_mobile = req.body.is_mobile ? req.body.is_mobile : false;
-        let createdAt = date;
-        let updatedAt = date;
-
-        let query = "select * from user where username='" + username + "' limit 1";
-        database.con.query(query, function (err, resultQuery) {
-            if (err) {
-                const response = {'status_code': 500, 'error': "Database Error"};
-                res.status(500).json(response);
-            } else {
-                if (resultQuery.length > 0) {
-                    jwt.sign({_uid: username}, process.env.JWTSECRET, {expiresIn: '1h'}
-                        , (err, token) => {
-                            const user = {
-                                'id': resultQuery[0].id,
-                                'firstname': resultQuery[0].firstname,
-                                'lastname': resultQuery[0].lastname,
-                                'email': resultQuery[0].email,
-                                'avatar': resultQuery[0].avatar,
-                                'username': resultQuery[0].username
-                            };
-                            let _token = {};
-                            if (is_mobile) {
-                                _token = {
-                                    'value': token
-                                }
-                            } else {
-                                _token = {
-                                    'value': token,
-                                    'expiry': 3600
-                                }
-                            }
-                            const data = {
-                                'user': user,
-                                'token': _token
-                            };
-                            const response = {
-                                'status_code': 200,
-                                'message': "Successful Login",
-                                'data': data
-                            };
-                            res.status(200).json(response);
-                        });
-                } else {
-                    console.log("USer Doesnt Exist");
-                    let query = "insert into user " +
-                        "(firstname, lastname, avatar, created_at, updated_at, email, username) " +
-                        "values " +
-                        "('" + firstName + "','" + lastName + "','" + avatar + "','" + createdAt + "'," +
-                        "'" + updatedAt + "','" + email + "','" + username + "')";
-                    database.con.query(query, function (err, resultQuery) {
-                        if (err) {
-                            const response = {'status_code': 500, 'error': "Database Error"};
-                            res.status(500).json(response);
-                        } else {
-                            console.log(resultQuery.insertId);
-                            jwt.sign({_uid: username}, process.env.JWTSECRET, {expiresIn: '1h'}
-                                , (err, token) => {
-                                    const user = {
-                                        'id': resultQuery.insertId,
-                                        'firstname': firstName,
-                                        'lastname': lastName,
-                                        'email': email,
-                                        'avatar': avatar,
-                                        'username': username
-                                    };
-                                    let _token = {};
-                                    if (is_mobile) {
-                                        _token = {
-                                            'value': token
-                                        }
-                                    } else {
-                                        _token = {
-                                            'value': token,
-                                            'expiry': 3600
-                                        }
-                                    }
-                                    const data = {
-                                        'user': user,
-                                        'token': _token
-                                    };
-                                    const response = {
-                                        'status_code': 200,
-                                        'message': "Successful Login",
-                                        'data': data
-                                    };
-                                    res.status(200).json(response);
-                                });
-                        }
-                    });
-                }
-            }
-        });
-    } catch (e) {
-        const response = {'status_code': 500, 'error': "Internal Server Error"};
-        res.status(500).json(response);
-    }
-};
-
 exports.resetRequest = async (req, res, next) => {
     let email = req.body.email;
     let query = "select * from user where email='" + email + "' limit 1";
@@ -335,7 +201,7 @@ exports.resetRequest = async (req, res, next) => {
                                     res.status(500).json(response);
                                 } else {
 
-                                    readHTMLFile('/home/ubuntu/whatthefake/backendServer/email/passwordReset.html', function (err, html) {
+                                    readHTMLFile('/home/ubuntu/certificate_Verification/backend/email/passwordReset.html', function (err, html) {
                                         let template = handlebars.compile(html);
                                         let replacements = {
                                             url: url
@@ -458,7 +324,11 @@ exports.update = async (req, res, next) => {
                                             'avatar': resultQuery[0].avatar,
                                             'username': resultQuery[0].username
                                         };
-                                        const response = {'status_code': 200, 'message': "User Successfully Updated", 'data': user};
+                                        const response = {
+                                            'status_code': 200,
+                                            'message': "User Successfully Updated",
+                                            'data': user
+                                        };
                                         res.status(200).json(response);
                                     }
                                 });
