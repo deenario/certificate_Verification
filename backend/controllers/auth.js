@@ -121,6 +121,7 @@ exports.login = (req, res, next) => {
                                             const user = {
                                                 'id': resultQuery[0].id,
                                                 'email': resultQuery[0].email,
+                                                'user_type': resultQuery[0].user_type
                                             };
                                             let _token = {
                                                 'value': token
@@ -142,6 +143,7 @@ exports.login = (req, res, next) => {
                                             const user = {
                                                 'id': resultQuery[0].id,
                                                 'email': resultQuery[0].email,
+                                                'user_type': resultQuery[0].user_type
                                             };
                                             let _token = {
                                                 'value': token,
