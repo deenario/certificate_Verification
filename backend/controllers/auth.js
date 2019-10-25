@@ -372,7 +372,7 @@ function hashFile(query, certificate , firstName , universityName, res ) {
                 } else {
                     if (resultQuery.length <= 0) {
                         let queryHashString = "'" + dataHash + "')";
-                        let queryInsert = queryString + queryHashString;
+                        let queryInsert = query + queryHashString;
                         let _request = {
                             chaincodeId: 'certificate',
                             fcn: 'addCertificateHash',
