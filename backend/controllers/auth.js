@@ -324,7 +324,7 @@ exports.createStudent = async (req, res, next) => {
         let firstName = req.body.firstname;
         let lastName = req.body.lastname;
         let createdAt = date;
-        let universityName = req.body.unviersity_name;
+        let universityName = req.body.university_name;
         let studentNumber = req.body.student_number;
         let start_date = req.body.start_date;
         let end_date = req.body.end_date;
