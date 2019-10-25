@@ -342,6 +342,10 @@ exports.createStudent = async (req, res, next) => {
     }
 };
 
+// exports.verify = async (req, res, next) => {
+//
+// };
+
 function checkEmail(email) {
     let find1 = email.indexOf("@");
     let find2 = email.indexOf(".");
