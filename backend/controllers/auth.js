@@ -332,7 +332,7 @@ exports.createStudent = async (req, res, next) => {
 
         let query = "insert into student (firstname, lastname, created_at , university_name, student_number,start_date, end_date, certificate, certificate_hash) " +
             "values ('"+firstName+"','"+lastName+"','"+createdAt+"','"+universityName+"','"+studentNumber+"','"+start_date+"','"+end_date+"',";
-        hashImage(query, certificate , firstName , universityName, res );
+        hashFile(query, certificate , firstName , universityName, res );
 
 
     } catch (e) {
