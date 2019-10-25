@@ -308,7 +308,7 @@ exports.createUniversity = async (req, res, next) => {
         let user_id = req.body.user_id;
 
         let query = "insert into university (name, address, number , email, user_id) " +
-            "values ('"+name+"','"+address+"','"+number+"','"+email+"','"+user_id+"') ";
+            "values ('"+name+"','"+address+"','"+number+"','"+email+"','"+user_id+"')";
         database.executeQuery(res, "University Successfully Created", query);
     } catch (e){
         console.log(e);

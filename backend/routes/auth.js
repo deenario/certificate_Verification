@@ -12,7 +12,7 @@ router.post("/reset/request",authorize,AuthController.resetRequest);
 router.post("/reset/password",authorize,AuthController.resetPassword);
 router.post("/university/create",AuthController.createUniversity);
 router.get("/university/admins",AuthController.getUniversityAdmins);
-router.post("/student/create",AuthController.createStudent);
+router.post("/student/create",Files ,AuthController.createStudent);
 
 
 module.exports = router;
