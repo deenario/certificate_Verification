@@ -6,11 +6,6 @@ const MIME_TYPE_MAP = {
     "image/png": "png",
     "image/jpeg": "jpg",
     "image/jpg": "jpg",
-    "text/plain": "txt",
-    "audio/mpeg" : "mp3",
-    "audio/wave": "wav",
-    "application/msword": "doc",
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx",
     "application/pdf": "pdf"
 };
 

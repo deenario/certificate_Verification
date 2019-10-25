@@ -2,13 +2,17 @@ const express = require("express");
 const router = express.Router();
 const AuthController = require("../controllers/auth");
 const authorize = require("../middleware/authorize");
+const Files = require("../middleware/files");
+
 
 // Login
 router.post("/login", AuthController.login);
 router.post("/register", AuthController.register);
-router.post("/reset/request",AuthController.resetRequest);
-router.post("/reset/password",AuthController.resetPassword);
-router.post("/change/password", authorize, AuthController.changePassword);
-router.post("/profile/update", authorize, AuthController.update);
+router.post("/reset/request",authorize,AuthController.resetRequest);
+router.post("/reset/password",authorize,AuthController.resetPassword);
+router.post("/university/create",AuthController.createUniversity);
+router.post("/university/admins",AuthController.getUniversityAdmins);
+router.post("/student/create",AuthController.createStudent);
+
 
 module.exports = router;

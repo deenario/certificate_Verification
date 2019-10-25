@@ -1,10 +1,17 @@
 require('dotenv').config();
+const imageThumbnail = require('image-thumbnail');
+const {imageHash} = require('image-hash');
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const database = require("../utils");
 const nodemailer = require('nodemailer');
 const handlebars = require('handlebars');
 const fs = require('fs');
+const crypto = require('crypto');
+const path = require('path');
+const invokeBlockchain = require("../blockchain/invokeNetwork");
+const queryBlockchain = require("../blockchain/queryNetwork");
+const mime = require('mime-types');
 
 let readHTMLFile = function (path, callback) {
     fs.readFile(path, {encoding: 'utf-8'}, function (err, html) {
@@ -26,7 +33,7 @@ let transporter = nodemailer.createTransport({
     }
 });
 
-var now = new Date();
+let now = new Date();
 const date = now.getFullYear() + '-' + (now.getMonth() + 1) + '-' + now.getDate();
 
 exports.register = async (req, res, next) => {
@@ -48,8 +55,8 @@ exports.register = async (req, res, next) => {
                 if (resultQuery.length <= 0) {
 
                     const query = "insert into user " +
-                        "(email, password, user_type, reset_token, created_at ) " +
-                        "values " + "('" + email + "','" + hash + "','" + userType + "','" + null + "','"+createdAt+"')";
+                        "(email, password, status, user_type, reset_token, created_at ) " +
+                        "values " + "('" + email + "','" + hash + "','active','" + userType + "','" + null + "','"+createdAt+"')";
                     database.executeQuery(res, "User Successfully Created", query);
 
                     readHTMLFile('/home/deenario/certificate_Verification/backend/email/registerUser.html', function (err, html) {
@@ -278,8 +285,112 @@ exports.resetPassword = async (req, res, next) => {
     });
 };
 
+exports.getUniversityAdmins = async (req,res,next) => {
+    try {
+        console.log("Get Admins API called");
+        console.log(req.body);
+        const query = "select * from user where user_type = 'university' order by id desc";
+        database.executeQuery(res, "", query);
+    } catch (e) {
+        const response = {'status_code': 500, 'error': "Internal Server Error"};
+        res.status(500).json(response);
+    }
+};
+
+exports.createUniversity = async (req, res, next) => {
+    try {
+        console.log("Body", req.body);
+        console.log("File", req.file);
+        let name = req.body.name;
+        let address = req.body.address;
+        let number = req.body.number;
+        let email = req.body.email;
+        let user_id = req.body.user_id;
+
+        let query = "insert into university (name, address, number , email, user_id) " +
+            "values ('"+name+"','"+address+"','"+number+"','"+email+"','"+user_id+"') ";
+        database.executeQuery(res, "University Successfully Created", query);
+    } catch (e){
+        console.log(e);
+        const response = {'status_code': 500, 'error': "Internal Server Error"};
+        res.status(500).json(response);
+    }
+};
+
+exports.createStudent = async (req, res, next) => {
+    try {
+        console.log("Body", req.body);
+        console.log("File", req.file);
+        let firstName = req.body.firstname;
+        let lastName = req.body.lastname;
+        let createdAt = date;
+        let universityName = req.body.unviersity_name;
+        let studentNumber = req.body.student_number;
+        let start_date = req.body.start_date;
+        let end_date = req.body.end_date;
+        let certificate = "certificates/" + req.file.filename;
+
+        let query = "insert into student (firstname, lastname, created_at , university_name, student_number,start_date, end_date, certificate, certificate_hash) " +
+            "values ('"+firstName+"','"+lastName+"','"+createdAt+"','"+universityName+"','"+studentNumber+"','"+start_date+"','"+end_date+"',";
+        hashImage(query, certificate , firstName , universityName, res );
+
+
+    } catch (e) {
+        console.log(e);
+        const response = {'status_code': 500, 'error': "Internal Server Error"};
+        res.status(500).json(response);
+    }
+};
+
 function checkEmail(email) {
     let find1 = email.indexOf("@");
     let find2 = email.indexOf(".");
     return find1 !== -1 && find2 !== -1 && find2 > find1;
+}
+
+function hashFile(queryString, dataLink,res) {
+    try {
+        let algorithm = 'sha1';
+        let shasum = crypto.createHash(algorithm);
+        const filePath = path.join(__dirname, '../public/' + dataLink);
+        let s = fs.ReadStream(filePath);
+        s.on('data', function (data) {
+            shasum.update(data)
+        });
+        s.on('end', function () {
+            let dataHash = shasum.digest('hex');
+            console.log(dataHash);
+            const selectQuery = "select * from student where certificate_hash='" + dataHash + "'";
+            database.con.query(selectQuery, function (err, resultQuery) {
+                if (err) {
+                    const response = {'status_code': 500, 'error': err};
+                    res.status(500).json(response);
+                } else {
+                    if (resultQuery.length <= 0) {
+                        let queryHashString = "'" + dataHash + "')";
+                        let queryInsert = queryString + queryHashString;
+                        let _request = {
+                            chaincodeId: 'certificate',
+                            fcn: 'addCertificateHash',
+                            args: [
+                                id,
+                                userID,
+                                dataHash,
+                                now.toISOString()
+                            ]
+                        };
+
+                        let blockchainResponse = invokeBlockchain.invokeCreate(_request);
+                        database.executeQuery(res, "Student Created Successfully", queryInsert);
+                    } else {
+                        const response = {'status_code': 500, 'error': "File already exists"};
+                        res.status(500).json(response);
+                    }
+                }
+            });
+        });
+    } catch (error) {
+        const response = {'status_code': 500, 'error': "Invalid File Type"};
+        res.status(500).json(response);
+    }
 }

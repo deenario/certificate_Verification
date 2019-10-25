@@ -21,9 +21,7 @@ type SmartContract struct {
 type Certificate struct {
 	ObjectType      string    `json:"Type"`
 	ID              string    `json:"id"`
-	UniversityID    string    `json:"universityID"`
 	UniversityName  string    `json:"universityName"`
-	StudentID       string    `json:"studentID"`
 	StudentName     string    `json:"studentName"`
 	CertificateHash string    `json:"certificateHash"`
 	CreatedAt       time.Time `json:"createdAt"`
@@ -57,17 +55,15 @@ func (t *SmartContract) Invoke(stub shim.ChaincodeStubInterface) peer.Response {
 func (t *SmartContract) addCertificate(stub shim.ChaincodeStubInterface, args []string) peer.Response {
 
 	var err error
-	if len(args) != 7 {
-		return shim.Error("Incorrect Number of Arguments. Expecting 7")
+	if len(args) != 5 {
+		return shim.Error("Incorrect Number of Arguments. Expecting 5")
 	}
 
 	id := args[0]
-	universityID := args[1]
-	universityName := args[2]
-	studentID := args[3]
-	studentName := args[4]
-	certificateHash := args[5]
-	createdAt, err1 := time.Parse(time.RFC3339, args[6])
+	universityName := args[1]
+	studentName := args[2]
+	certificateHash := args[3]
+	createdAt, err1 := time.Parse(time.RFC3339, args[4])
 	if err1 != nil {
 		return shim.Error(err.Error())
 	}
@@ -82,7 +78,7 @@ func (t *SmartContract) addCertificate(stub shim.ChaincodeStubInterface, args []
 
 	// ===== Create Object and Marshal to JSON
 	objectType := "certificate"
-	data := &Certificate{objectType, id, universityID, universityName, studentID, studentName, certificateHash, createdAt}
+	data := &Certificate{objectType, id, universityName, studentName, certificateHash, createdAt}
 	dataJSONasBytes, err := json.Marshal(data)
 
 	if err != nil {
