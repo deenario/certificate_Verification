@@ -373,18 +373,18 @@ function hashFile(query, certificate , firstName , universityName, res ) {
                     if (resultQuery.length <= 0) {
                         let queryHashString = "'" + dataHash + "')";
                         let queryInsert = query + queryHashString;
-                        let _request = {
-                            chaincodeId: 'certificate',
-                            fcn: 'addCertificateHash',
-                            args: [
-                                id,
-                                userID,
-                                dataHash,
-                                now.toISOString()
-                            ]
-                        };
-
-                        let blockchainResponse = invokeBlockchain.invokeCreate(_request);
+                        // let _request = {
+                        //     chaincodeId: 'certificate',
+                        //     fcn: 'addCertificateHash',
+                        //     args: [
+                        //         id,
+                        //         userID,
+                        //         dataHash,
+                        //         now.toISOString()
+                        //     ]
+                        // };
+                        //
+                        // let blockchainResponse = invokeBlockchain.invokeCreate(_request);
                         database.executeQuery(res, "Student Created Successfully", queryInsert);
                     } else {
                         const response = {'status_code': 500, 'error': "File already exists"};
