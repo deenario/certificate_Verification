@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
             error = null;
         }
         console.log(mime.lookup("docx"));
-        cb(error, "public/files");
+        cb(error, "public/certificates");
     },
     filename: (req, file, cb) => {
         const name = file.originalname
