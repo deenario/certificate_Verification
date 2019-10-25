@@ -6,6 +6,8 @@ const MIME_TYPE_MAP = {
     "image/png": "png",
     "image/jpeg": "jpg",
     "image/jpg": "jpg",
+    "application/msword": "doc",
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document": "docx",
     "application/pdf": "pdf"
 };
 
