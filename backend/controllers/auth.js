@@ -352,11 +352,11 @@ function checkEmail(email) {
     return find1 !== -1 && find2 !== -1 && find2 > find1;
 }
 
-function hashFile(queryString, dataLink,res) {
+function hashFile(query, certificate , firstName , universityName, res ) {
     try {
         let algorithm = 'sha1';
         let shasum = crypto.createHash(algorithm);
-        const filePath = path.join(__dirname, '../public/' + dataLink);
+        const filePath = path.join(__dirname, '../public/' + certificate);
         let s = fs.ReadStream(filePath);
         s.on('data', function (data) {
             shasum.update(data)
