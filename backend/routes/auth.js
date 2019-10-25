@@ -11,7 +11,7 @@ router.post("/register", AuthController.register);
 router.post("/reset/request",authorize,AuthController.resetRequest);
 router.post("/reset/password",authorize,AuthController.resetPassword);
 router.post("/university/create",AuthController.createUniversity);
-router.post("/university/admins",AuthController.getUniversityAdmins);
+router.get("/university/admins",AuthController.getUniversityAdmins);
 router.post("/student/create",AuthController.createStudent);
 
 
