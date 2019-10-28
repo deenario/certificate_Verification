@@ -25,7 +25,7 @@ let readHTMLFile = function (path, callback) {
 };
 
 let transporter = nodemailer.createTransport({
-    host: "Gmail",
+    host: "smtp.gmail.com",
     auth: {
         user: "blockchain.certification.lk@gmail.com",
         pass: "Abc@1234"
