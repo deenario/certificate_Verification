@@ -14,6 +14,7 @@ router.post("/university/create",AuthController.createUniversity);
 router.get("/university/admins",AuthController.getUniversityAdmins);
 router.get("/university",AuthController.getUniversity);
 router.post("/student/create",Files ,AuthController.createStudent);
+router.get("/student" ,AuthController.getStudents);
 
 
 module.exports = router;

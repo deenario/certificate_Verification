@@ -342,6 +342,18 @@ exports.createStudent = async (req, res, next) => {
     }
 };
 
+exports.getStudents = async  (req, res, next) => {
+    try {
+        console.log("Get Admins API called");
+        console.log(req.body);
+        const query = "Select * from students order by id desc";
+        database.executeQuery(res, "", query);
+    } catch (e) {
+        const response = {'status_code': 500, 'error': "Internal Server Error"};
+        res.status(500).json(response);
+    }
+};
+
 exports.getUniversity = async (req, res, next) => {
     try {
         console.log("Get Admins API called");
