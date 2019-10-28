@@ -104,7 +104,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <table class="table table-bordered"  width="100%" cellspacing="0">
                             <thead>
                             <tr>
                                 <th>University Name</th>
@@ -112,34 +112,9 @@
                                 <th>Contact Number</th>
                                 <th>Contact Email</th>
                                 <th>Status</th>
-                                <th></th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr>
-                                <td>Univercity of Colombo</td>
-                                <td>Colombo</td>
-                                <td>CMB Admin</td>
-                                <td>admin@gmail.com</td>
-                                <td>Active</td>
-                                <td>
-                                    <a href="#exampleModalCenter" data-toggle="modal" data-target="#exampleModalCenter">Edit</a>
-                                    |
-                                    <a href="#resetModal" data-toggle="modal" data-target="#resetModal">Reset</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>ICBT University</td>
-                                <td>Kandy</td>
-                                <td>ICBT Admin</td>
-                                <td>admin@icbt.com</td>
-                                <td>Inactive</td>
-                                <td>
-                                    <a href="#exampleModalCenter" data-toggle="modal" data-target="#exampleModalCenter">Edit</a>
-                                    |
-                                    <a href="#resetModal" data-toggle="modal" data-target="#resetModal">Reset</a>
-                                </td>
-                            </tr>
+                            <tbody id ="uniInfo">
                             </tbody>
                         </table>
                     </div>
@@ -289,6 +264,30 @@
                 $("#univeristyAdmins").append(UniversityAdmins);
             }
         });
+
+        let universityInfo = '';
+        $.ajax({
+            type: 'GET',
+            url: 'http://35.200.177.16:8000/api/auth/university',
+            cache: false,
+            complete: function (data, status) {
+                if (status === "success") {
+                    for (let i = 0; i < data.responseJSON.data.files.length; i++) {
+                        universityInfo += "<tr>";
+                        universityInfo += "<td>" + data.responseJSON.data.files[i].name + "</td>";
+                        universityInfo += "<td>" + data.responseJSON.data.files[i].address + "</td>";
+                        universityInfo += "<td>" + data.responseJSON.data.files[i].number + "</td>";
+                        universityInfo += "<td>" + data.responseJSON.data.files[i].email + "</td>";
+                        universityInfo += "<td>" + data.responseJSON.data.files[i].status + "</td>";
+                        universityInfo += "</tr>"
+                    }
+                } else {
+                    alert('Error Occured. Check Node logs.');
+                }
+                $("#uniInfo").append(universityInfo);
+                universityInfo = "";
+            }
+        });
     });
 
     $("#univeristyAdmins").on('change', function () {
@@ -316,7 +315,7 @@
             cache: false,
             complete: function (data, status) {
                 if (status === 'success') {
-                    alert("Data Added");
+                    window.location.href = "./universities.html";
                 } else {
                     alert("Username or Password credentials are incorrect.");
                 }
