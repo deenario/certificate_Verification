@@ -58,7 +58,6 @@
 <script>
     $("form.Form").on('submit', function (e) {
         e.preventDefault();
-        alert("clicked");
         const inputEmailValue = $("#inputEmail").val();
         const inputPasswordValue = $("#inputPassword").val();
 
@@ -76,7 +75,7 @@
                     alert("University Admin Created");
                     window.location.href = './adminDashboard.html';
                 } else {
-                    alert("Error Occurred");
+                    alert("Email already Exists");
                 }
                 console.log(data);
                 console.log(status);
