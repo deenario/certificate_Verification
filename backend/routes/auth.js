@@ -12,6 +12,7 @@ router.post("/reset/request",authorize,AuthController.resetRequest);
 router.post("/reset/password",authorize,AuthController.resetPassword);
 router.post("/university/create",AuthController.createUniversity);
 router.get("/university/admins",AuthController.getUniversityAdmins);
+router.get("/university",AuthController.getUniversity);
 router.post("/student/create",Files ,AuthController.createStudent);
 
 

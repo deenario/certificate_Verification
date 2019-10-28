@@ -342,6 +342,18 @@ exports.createStudent = async (req, res, next) => {
     }
 };
 
+exports.getUniversity = async (req, res, next) => {
+    try {
+        console.log("Get Admins API called");
+        console.log(req.body);
+        const query = "elect university.name,university.address,university.number,university.email,user.email,user.status from university join user on university.user_id = user.id order by university.id desc";
+        database.executeQuery(res, "", query);
+    } catch (e) {
+        const response = {'status_code': 500, 'error': "Internal Server Error"};
+        res.status(500).json(response);
+    }
+};
+
 exports.verify = (req, res) => {
     try {
         let filePath;

@@ -2,9 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9be651c-6476-4acc-bae5-1b67ca2778ee" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/admin_views/searchUniversity.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/controllers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/routes/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/routes/auth.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webPortal/adminDashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/webPortal/adminDashboard.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webPortal/register.html" beforeDir="false" afterPath="$PROJECT_DIR$/webPortal/register.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webPortal/searchAdmin.html" beforeDir="false" afterPath="$PROJECT_DIR$/webPortal/search.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webPortal/searchUniversity.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/webPortal/students.html" beforeDir="false" afterPath="$PROJECT_DIR$/webPortal/students.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webPortal/universities.html" beforeDir="false" afterPath="$PROJECT_DIR$/webPortal/universities.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/webPortal/universityDashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/webPortal/universityDashboard.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,7 +30,7 @@
     </option>
   </component>
   <component name="PackageJsonUpdateNotifier">
-    <dismissed value="$PROJECT_DIR$/admin_views/package.json" />
+    <dismissed value="$PROJECT_DIR$/webPortal/package.json" />
   </component>
   <component name="ProjectId" id="1SYOrcpknm3oU8rB6GCQI3yUg21" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -65,7 +72,7 @@
       <workItem from="1571737263492" duration="1810000" />
       <workItem from="1571838036969" duration="4142000" />
       <workItem from="1572025741569" duration="13250000" />
-      <workItem from="1572241299240" duration="3717000" />
+      <workItem from="1572241299240" duration="7286000" />
     </task>
     <servers />
   </component>
