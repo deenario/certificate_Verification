@@ -224,7 +224,6 @@ exports.resetRequest = async (req, res, next) => {
                                         transporter.sendMail(mailOptions, function (error, info) {
                                             if (error) {
                                                 console.log(error);
-                                                callback(error);
                                             } else {
                                                 const response = {
                                                     'status_code': 200,
