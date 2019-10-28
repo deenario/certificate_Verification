@@ -18,5 +18,8 @@ app.use(cors());
 
 app.use('/api/auth' , authRoutes);
 app.use('/api', routes);
+app.get('/',function(req,res){
+    res.sendFile(path.join(__dirname+'../webPortal/login.html'));
+});
 
 module.exports = app;
