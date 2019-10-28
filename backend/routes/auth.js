@@ -9,7 +9,7 @@ const Files = require("../middleware/files");
 router.post("/login", AuthController.login);
 router.post("/register", AuthController.register);
 router.post("/reset/request",AuthController.resetRequest);
-router.post("/reset/password",authorize,AuthController.resetPassword);
+router.post("/reset/password",AuthController.resetPassword);
 router.post("/university/create",AuthController.createUniversity);
 router.get("/university/admins",AuthController.getUniversityAdmins);
 router.get("/university",AuthController.getUniversity);
