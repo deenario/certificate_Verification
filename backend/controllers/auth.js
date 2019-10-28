@@ -56,7 +56,7 @@ exports.register = async (req, res, next) => {
 
                     const query = "insert into user " +
                         "(email, password, status, user_type, reset_token, created_at ) " +
-                        "values " + "('" + email + "','" + hash + "','active','" + userType + "','" + null + "','"+createdAt+"')";
+                        "values " + "('" + email + "','" + hash + "','active','" + userType + "','" + null + "','" + createdAt + "')";
                     database.executeQuery(res, "User Successfully Created", query);
 
                     readHTMLFile('/home/deenario/certificate_Verification/backend/email/registerUser.html', function (err, html) {
@@ -285,7 +285,7 @@ exports.resetPassword = async (req, res, next) => {
     });
 };
 
-exports.getUniversityAdmins = async (req,res,next) => {
+exports.getUniversityAdmins = async (req, res, next) => {
     try {
         console.log("Get Admins API called");
         console.log(req.body);
@@ -308,9 +308,9 @@ exports.createUniversity = async (req, res, next) => {
         let user_id = req.body.user_id;
 
         let query = "insert into university (name, address, number , email, user_id) " +
-            "values ('"+name+"','"+address+"','"+number+"','"+email+"','"+user_id+"')";
+            "values ('" + name + "','" + address + "','" + number + "','" + email + "','" + user_id + "')";
         database.executeQuery(res, "University Successfully Created", query);
-    } catch (e){
+    } catch (e) {
         console.log(e);
         const response = {'status_code': 500, 'error': "Internal Server Error"};
         res.status(500).json(response);
@@ -331,8 +331,8 @@ exports.createStudent = async (req, res, next) => {
         let certificate = "certificates/" + req.file.filename;
 
         let query = "insert into student (firstname, lastname, created_at , university_name, student_number,start_date, end_date, certificate, certificate_hash) " +
-            "values ('"+firstName+"','"+lastName+"','"+createdAt+"','"+universityName+"','"+studentNumber+"','"+start_date+"','"+end_date+"','"+certificate+"',";
-        hashFile(query, certificate , firstName , universityName, res );
+            "values ('" + firstName + "','" + lastName + "','" + createdAt + "','" + universityName + "','" + studentNumber + "','" + start_date + "','" + end_date + "','" + certificate + "',";
+        hashFile(query, certificate, firstName, universityName, res);
 
 
     } catch (e) {
@@ -342,9 +342,56 @@ exports.createStudent = async (req, res, next) => {
     }
 };
 
-// exports.verify = async (req, res, next) => {
-//
-// };
+exports.verify = (req, res) => {
+    try {
+        let filePath;
+        console.log("BODY", req.body);
+        console.log("Verifier", verifier);
+        filePath = req.file.path;
+        console.log("FileBased", filePath);
+        console.log(filePath);
+
+        let algorithm = 'sha1';
+        let shasum = crypto.createHash(algorithm);
+        let s = fs.ReadStream(filePath);
+        s.on('data', function (data) {
+            shasum.update(data)
+        });
+        s.on('end', function () {
+            let dataHash = shasum.digest('hex');
+            const query = "select * from user_data where data_hash='" + dataHash + "'";
+            let _request = {
+                chaincodeId: 'whatthefake',
+                fcn: 'queryFileHash',
+                args: [
+                    dataHash
+                ]
+            };
+            database.con.query(query, function (err, resultQuery) {
+                if (err) {
+                    console.log(err);
+                } else {
+                    if (resultQuery.length > 0) {
+                        console.log(resultQuery.id);
+                        const Querylog = "INSERT INTO data_logs (data_id,verifier,created_at,user_id) " +
+                            "VALUES (" + resultQuery[0].id + ",'" + verifier + "','" + date + "'," + user_id + ")";
+                        database.con.query(Querylog, function (err, result) {
+                            if (err) {
+                                console.log(err);
+                            }
+                        });
+                    }
+                }
+            });
+            let blockchainresponse = queryBlockchain.invokeQuery(_request);
+            database.executeQuery(res, "", query, true);
+        });
+    } catch (e) {
+        const response = {'status_code': 500, 'error': "Error Occurred"};
+        res.status(500).json(response);
+        console.log(e);
+    }
+};
 
 function checkEmail(email) {
     let find1 = email.indexOf("@");
@@ -352,7 +399,7 @@ function checkEmail(email) {
     return find1 !== -1 && find2 !== -1 && find2 > find1;
 }
 
-function hashFile(query, certificate , firstName , universityName, res ) {
+function hashFile(query, certificate, firstName, universityName, res) {
     try {
         let algorithm = 'sha1';
         let shasum = crypto.createHash(algorithm);
