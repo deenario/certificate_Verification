@@ -381,7 +381,7 @@ exports.verify = (req, res) => {
         });
         s.on('end', function () {
             let dataHash = shasum.digest('hex');
-            const query = "select * from user_data where data_hash='" + dataHash + "'";
+            const query = "select * from student where certificate_hash='" + dataHash + "'";
             let _request = {
                 chaincodeId: 'whatthefake',
                 fcn: 'queryFileHash',
