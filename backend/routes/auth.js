@@ -8,7 +8,7 @@ const Files = require("../middleware/files");
 // Login
 router.post("/login", AuthController.login);
 router.post("/register", AuthController.register);
-router.post("/reset/request",authorize,AuthController.resetRequest);
+router.post("/reset/request",AuthController.resetRequest);
 router.post("/reset/password",authorize,AuthController.resetPassword);
 router.post("/university/create",AuthController.createUniversity);
 router.get("/university/admins",AuthController.getUniversityAdmins);
