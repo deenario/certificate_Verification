@@ -25,11 +25,10 @@ let readHTMLFile = function (path, callback) {
 };
 
 let transporter = nodemailer.createTransport({
-    host: "smtp.mailtrap.io",
-    port: 2525,
+    host: "gmail.",
     auth: {
-        user: "03d4327438b410",
-        pass: "05b328419d4347"
+        user: "blockchain.certification.lk@gmail.com",
+        pass: "Abc@1234"
     }
 });
 
