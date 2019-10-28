@@ -215,7 +215,7 @@ exports.resetRequest = async (req, res, next) => {
                                         };
                                         let htmlToSend = template(replacements);
                                         let mailOptions = {
-                                            from: process.env.EMAIL,
+                                            from: "blockchain.certification.lk@gmail.com",
                                             to: email,
                                             subject: 'Password Reset',
                                             html: htmlToSend
