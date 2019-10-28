@@ -200,7 +200,7 @@ exports.resetRequest = async (req, res, next) => {
                         if (err) {
                             console.log(err);
                         } else {
-                            const url = req.protocol + "://" + req.get("host") + "/reset/password/" + token;
+                            const url =  token;
                             let query = "update user set reset_token='" + token + "' where email='" + email + "' limit 1";
                             database.con.query(query, function (err, resultQuery) {
                                 if (err) {
