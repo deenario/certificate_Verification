@@ -2,10 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f9be651c-6476-4acc-bae5-1b67ca2778ee" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/backend/email/certificateEmail.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/controllers/auth.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/controllers/auth.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webPortal/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/webPortal/login.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webPortal/students.html" beforeDir="false" afterPath="$PROJECT_DIR$/webPortal/students.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -32,7 +31,7 @@
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/webPortal" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/backend/email" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -43,6 +42,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/backend/email" />
       <recent name="$PROJECT_DIR$/webPortal" />
     </key>
   </component>
@@ -81,7 +81,7 @@
       <workItem from="1571737263492" duration="1810000" />
       <workItem from="1571838036969" duration="4142000" />
       <workItem from="1572025741569" duration="13250000" />
-      <workItem from="1572241299240" duration="21725000" />
+      <workItem from="1572241299240" duration="22779000" />
     </task>
     <servers />
   </component>

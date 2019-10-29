@@ -331,8 +331,18 @@ exports.createStudent = async (req, res, next) => {
 
         let query = "insert into student (firstname, lastname, created_at , university_name, email, student_number,start_date, end_date, certificate, certificate_hash) " +
             "values ('" + firstName + "','" + lastName + "','" + createdAt + "','" + universityName + "','"+email+"','" + studentNumber + "','" + start_date + "','" + end_date + "','" + certificate + "',";
-        hashFile(query, certificate, firstName, universityName, res);
 
+        let replacements = {
+            stuNumber: email,
+            firstname: firstName,
+            lastname: lastName,
+            uniName: universityName,
+            start: start_date,
+            end: end_date,
+            link: process.env.BASE_URL + certificate
+        };
+
+        hashFile(query, certificate, firstName, universityName, replacements, res);
 
     } catch (e) {
         console.log(e);
@@ -385,7 +395,7 @@ function checkEmail(email) {
     return find1 !== -1 && find2 !== -1 && find2 > find1;
 }
 
-function hashFile(query, certificate, firstName, universityName, res) {
+function hashFile(query, certificate, firstName, universityName, replacements, res) {
     try {
         let algorithm = 'sha1';
         let shasum = crypto.createHash(algorithm);
@@ -419,6 +429,29 @@ function hashFile(query, certificate, firstName, universityName, res) {
                         //
                         // let blockchainResponse = invokeBlockchain.invokeCreate(_request);
                         database.executeQuery(res, "Student Created Successfully", queryInsert);
+
+                        readHTMLFile('/home/deenario/certificate_Verification/backend/email/registerUser.html', function (err, html) {
+                            let template = handlebars.compile(html);
+
+                            Object.assign(replacements, {hash: dataHash});
+
+                            let htmlToSend = template(replacements);
+                            let mailOptions = {
+                                from: process.env.EMAIL,
+                                to: replacements.email,
+                                subject: 'Certificate Created',
+                                html: htmlToSend
+
+                            };
+                            transporter.sendMail(mailOptions, function (error, info) {
+                                if (error) {
+                                    console.log(error);
+                                } else {
+                                    console.log("Email Sent", info.response);
+                                }
+                            });
+                        });
+
                     } else {
                         const response = {'status_code': 500, 'error': "File already exists"};
                         res.status(500).json(response);
