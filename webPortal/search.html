@@ -2,185 +2,135 @@
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-  <title>SB Admin - Tables</title>
-  <!-- Custom fonts for this template-->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <!-- Page level plugin CSS-->
-  <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
-  <!-- Custom styles for this template-->
-  <link href="css/sb-admin.css" rel="stylesheet">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>SB Admin - Tables</title>
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <!-- Page level plugin CSS-->
+    <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet">
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin.css" rel="stylesheet">
 </head>
 
 <body id="page-top">
-
-    <div id="content-wrapper">
-
-      <div class="container-fluid">
-
-        <br />
+<div id="content-wrapper">
+    <div class="container-fluid">
+        <br/>
         <!-- Search Form  -->
-        <form class="form-inline">
-          <div class="form-group mb-2">
-              Student Hash
-          </div>
-          <div style="width: 80%;" class="form-group mx-sm-3 mb-2">
-            <input  style="width: 100%;" type="text" class="form-control" id="hash" placeholder="Student Hash">
-          </div>
-          <button type="submit" class="btn btn-primary mb-2">Search</button>
+        <form class="form-inline Form">
+            <div class="form-group mb-2">
+                Student Hash
+            </div>
+            <div style="width: 80%;" class="form-group mx-sm-3 mb-2">
+                <input style="width: 100%;" type="text" class="form-control" id="hash" placeholder="Student Hash">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Search</button>
         </form>
 
-        <br />
+        <br/>
 
-        <table class="table table-bordered">
+        <table class="table table-bordered" id="studentInfo">
             <thead>
-              <tr>
-                <th scope="col">Name</th>
-                <td scope="col">Inshar</td>
-              </tr>
             </thead>
-            <tbody>
-              <tr>
+            <tbody id="tableBody">
+            <tr>
+                <th scope="col">Name</th>
+                <td scope="col" id="stdName"></td>
+            </tr>
+            <tr>
                 <th scope="col">University</th>
-                <td scope="col">ICBT</td>
-              </tr>
-              <tr>
-                <th scope="col">Credential</th>
-                <td scope="col">B.Sc.</td>
-              </tr>
-              <tr>
-                <th scope="col">Valid Date</th>
-                <td scope="col">3rd Novermber 2019</td>
-              </tr>
-              <tr>
+                <td scope="col" id="stdUni"></td>
+            </tr>
+            <tr>
+                <th scope="col">Start Date</th>
+                <td scope="col" id="stdStartDate"></td>
+            </tr>
+            <tr>
+                <th scope="col">End Date</th>
+                <td scope="col" id="stdEndDate"></td>
+            </tr>
+            <tr>
                 <th scope="col">Certificate</th>
                 <td scope="col"><img src="cert2.jpg" align="center" width="50%"/></td>
-              </tr>
+            </tr>
             </tbody>
-          </table>
-
-
-      </div>
-      <!-- /.container-fluid -->
-
+        </table>
     </div>
-    <!-- /.content-wrapper -->
+    <!-- /.container-fluid -->
+</div>
+<!-- /.content-wrapper -->
+</div>
 
-  </div>
-  <!-- /#wrapper -->
+<!-- Bootstrap core JavaScript-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Scroll to Top Button-->
-  <a class="scroll-to-top rounded" href="#page-top">
-    <i class="fas fa-angle-up"></i>
-  </a>
+<!-- Core plugin JavaScript-->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- Page level plugin JavaScript-->
+<script src="vendor/datatables/jquery.dataTables.js"></script>
+<script src="vendor/datatables/dataTables.bootstrap4.js"></script>
 
-  <!-- Reset Modal-->
-  <div class="modal fade" id="resetModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Sure you want to reset password?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="#">Confirm</a>
-        </div>
-      </div>
-    </div>
-  </div>
+<!-- Custom scripts for all pages-->
+<script src="js/sb-admin.min.js"></script>
 
+<!-- Demo scripts for this page-->
+<script src="js/demo/datatables-demo.js"></script>
+<script>
 
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Edit University</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
+    $("form.Form").on("submit", function (e) {
+        e.preventDefault();
 
-          <form>
-            <div class="form-group">
-              <label for="exampleInputEmail1">University Name</label>
-              <input class="form-control" type="text" placeholder="University Name">
-            </div>
-            <div class="form-group">
-              <label for="exampleInputPassword1">Adress</label>
-              <input class="form-control" type="text" placeholder="Adress">
-            </div>
-            <div class="form-group">
-              <label for="exampleInputPassword1">Conact Name</label>
-              <input class="form-control" type="text" placeholder="Conact Name">
-            </div>
-            <div class="form-group">
-              <label for="exampleInputEmail1">Email</label>
-              <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-            </div>
-            <div class="form-group">
-              <label for="exampleFormControlSelect1">Status</label>
-              <select class="form-control" id="exampleFormControlSelect1">
-                <option>Active</option>
-                <option>Inactive</option>
-              </select>
-            </div>
-          </form>
+        let hash = $("input#hash").val();
+        let StudentInfo = '';
+
+        $.ajax({
+            type: 'GET',
+            url: 'http://35.200.177.16:8000/api/auth/verify',
+            cache: false,
+            complete: function (data, status) {
+                console.log(data);
+                if (status === "success") {
+                    for (let i = 0; i < data.responseJSON.data.files.length; i++) {
+
+                        StudentInfo += " <th scope = 'col' > Student Number </th>";
+                        StudentInfo += "<td scope = 'col' > " + data.responseJSON.data.files.student_number + " < /td>";
+
+                        StudentInfo += " <th scope = 'col' > Name </th>";
+                        StudentInfo += "<td scope = 'col' > " + data.responseJSON.data.files.firstname + " < /td>";
+
+                        StudentInfo += " <th scope = 'col' > University </th>";
+                        StudentInfo += "<td scope = 'col' > " + data.responseJSON.data.files.university_name + " < /td>";
+
+                        StudentInfo += " <th scope = 'col' > Start Date </th>";
+                        StudentInfo += "<td scope = 'col' > " + data.responseJSON.data.files.start_date + " < /td>";
+
+                        StudentInfo += " <th scope = 'col' > End Date </th>";
+                        StudentInfo += "<td scope = 'col' > " + data.responseJSON.data.files.end_date + " < /td>";
+
+                        StudentInfo += " <th scope = 'col' > Certificate Hash </th>";
+                        StudentInfo += "<td scope = 'col' > " + data.responseJSON.data.files.certificate_hash + " < /td>";
+
+                      StudentInfo += " <th scope = 'col' > Certificate Hash </th>";
+                      StudentInfo += "<td scope='col'><img src='"+ data.responseJSON.data.base_url + data.responseJSON.data.files.certificate+"' align='center' width='50%'/></td>";
 
 
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div>
+                    }
+                } else {
+                    alert('Error Occured. Check Node logs.');
+                }
+                $("#tableBody").append(StudentInfo);
+                StudentInfo = "";
+            }
+        });
+    });
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Page level plugin JavaScript-->
-  <script src="vendor/datatables/jquery.dataTables.js"></script>
-  <script src="vendor/datatables/dataTables.bootstrap4.js"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="js/sb-admin.min.js"></script>
-
-  <!-- Demo scripts for this page-->
-  <script src="js/demo/datatables-demo.js"></script>
-
+</script>
 </body>
 
 </html>

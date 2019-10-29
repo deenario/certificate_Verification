@@ -3,8 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="f9be651c-6476-4acc-bae5-1b67ca2778ee" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/.env" beforeDir="false" afterPath="$PROJECT_DIR$/backend/.env" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/webPortal/search.html" beforeDir="false" afterPath="$PROJECT_DIR$/webPortal/search.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/webPortal/students.html" beforeDir="false" afterPath="$PROJECT_DIR$/webPortal/students.html" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -57,6 +57,16 @@
       </list>
     </option>
   </component>
+  <component name="RunManager">
+    <configuration name="search.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/certificate_Verification/webPortal/search.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.search.html" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -70,7 +80,7 @@
       <workItem from="1571737263492" duration="1810000" />
       <workItem from="1571838036969" duration="4142000" />
       <workItem from="1572025741569" duration="13250000" />
-      <workItem from="1572241299240" duration="15892000" />
+      <workItem from="1572241299240" duration="18352000" />
     </task>
     <servers />
   </component>
