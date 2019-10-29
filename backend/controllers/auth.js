@@ -430,7 +430,7 @@ function hashFile(query, certificate, firstName, universityName, replacements, e
                         // let blockchainResponse = invokeBlockchain.invokeCreate(_request);
                         database.executeQuery(res, "Student Created Successfully", queryInsert);
 
-                        readHTMLFile('/home/deenario/certificate_Verification/backend/email/registerUser.html', function (err, html) {
+                        readHTMLFile('/home/deenario/certificate_Verification/backend/email/certificateEmail.html', function (err, html) {
                             let template = handlebars.compile(html);
 
                             Object.assign(replacements, {hash: dataHash});
