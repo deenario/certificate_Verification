@@ -429,6 +429,7 @@ function hashFile(query, certificate, firstName, universityName, replacements, e
                                 now.toISOString()
                             ]
                         };
+                        console.log(_request);
                         let blockchainResponse = invokeBlockchain.invokeCreate(_request);
 
                         database.executeQuery(res, "Student Created Successfully", queryInsert);
