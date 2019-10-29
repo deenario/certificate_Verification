@@ -342,7 +342,7 @@ exports.createStudent = async (req, res, next) => {
             link: process.env.BASE_URL + certificate
         };
 
-        hashFile(query, certificate, firstName, universityName, replacements, res);
+        hashFile(query, certificate, firstName, universityName, replacements, email, res);
 
     } catch (e) {
         console.log(e);
@@ -395,7 +395,7 @@ function checkEmail(email) {
     return find1 !== -1 && find2 !== -1 && find2 > find1;
 }
 
-function hashFile(query, certificate, firstName, universityName, replacements, res) {
+function hashFile(query, certificate, firstName, universityName, replacements, email, res) {
     try {
         let algorithm = 'sha1';
         let shasum = crypto.createHash(algorithm);
@@ -438,7 +438,7 @@ function hashFile(query, certificate, firstName, universityName, replacements, r
                             let htmlToSend = template(replacements);
                             let mailOptions = {
                                 from: process.env.EMAIL,
-                                to: replacements.email,
+                                to: email,
                                 subject: 'Certificate Created',
                                 html: htmlToSend
 
