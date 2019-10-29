@@ -37,26 +37,6 @@
             <thead>
             </thead>
             <tbody id="tableBody">
-            <tr>
-                <th scope="col">Name</th>
-                <td scope="col" id="stdName"></td>
-            </tr>
-            <tr>
-                <th scope="col">University</th>
-                <td scope="col" id="stdUni"></td>
-            </tr>
-            <tr>
-                <th scope="col">Start Date</th>
-                <td scope="col" id="stdStartDate"></td>
-            </tr>
-            <tr>
-                <th scope="col">End Date</th>
-                <td scope="col" id="stdEndDate"></td>
-            </tr>
-            <tr>
-                <th scope="col">Certificate</th>
-                <td scope="col"><img src="cert2.jpg" align="center" width="50%"/></td>
-            </tr>
             </tbody>
         </table>
     </div>
@@ -91,36 +71,34 @@
 
         $.ajax({
             type: 'GET',
-            url: 'http://35.200.177.16:8000/api/auth/verify?hash='+hash+'',
+            url: 'http://35.200.177.16:8000/api/auth/verify?hash=' + hash + '',
             cache: false,
             complete: function (data, status) {
                 console.log(data);
                 if (status === "success") {
-                    for (let i = 0; i < data.responseJSON.data.files.length; i++) {
 
-                        StudentInfo += " <th scope = 'col' > Student Number </th>";
-                        StudentInfo += "<td scope = 'col' > " + data.responseJSON.data.files.student_number + " < /td>";
+                    StudentInfo += " <tr></tw><th scope = 'col' > Student Number </th>";
+                    StudentInfo += "<td scope = 'col' > " + data.responseJSON.data.file.student_number + "</td></tr>";
 
-                        StudentInfo += " <th scope = 'col' > Name </th>";
-                        StudentInfo += "<td scope = 'col' > " + data.responseJSON.data.files.firstname + " < /td>";
+                    StudentInfo += "<tr><th scope = 'col' > Name </th>";
+                    StudentInfo += "<td scope = 'col' > " + data.responseJSON.data.file.firstname + "</td></tr>";
 
-                        StudentInfo += " <th scope = 'col' > University </th>";
-                        StudentInfo += "<td scope = 'col' > " + data.responseJSON.data.files.university_name + " < /td>";
+                    StudentInfo += "<tr><th scope = 'col' > University </th>";
+                    StudentInfo += "<td scope = 'col' > " + data.responseJSON.data.file.university_name + "</td></tr>";
 
-                        StudentInfo += " <th scope = 'col' > Start Date </th>";
-                        StudentInfo += "<td scope = 'col' > " + data.responseJSON.data.files.start_date + " < /td>";
+                    StudentInfo += "<tr><th scope = 'col' > Start Date </th>";
+                    StudentInfo += "<td scope = 'col' > " + data.responseJSON.data.file.start_date + "</td></tr>";
 
-                        StudentInfo += " <th scope = 'col' > End Date </th>";
-                        StudentInfo += "<td scope = 'col' > " + data.responseJSON.data.files.end_date + " < /td>";
+                    StudentInfo += "<tr><th scope = 'col' > End Date </th>";
+                    StudentInfo += "<td scope = 'col' > " + data.responseJSON.data.file.end_date + "</td></tr>";
 
-                        StudentInfo += " <th scope = 'col' > Certificate Hash </th>";
-                        StudentInfo += "<td scope = 'col' > " + data.responseJSON.data.files.certificate_hash + " < /td>";
+                    StudentInfo += "<tr><th scope = 'col' > Certificate Hash </th>";
+                    StudentInfo += "<td scope = 'col' > " + data.responseJSON.data.file.certificate_hash + "</td></tr>";
 
-                      StudentInfo += " <th scope = 'col' > Certificate Hash </th>";
-                      StudentInfo += "<td scope='col'><img src='"+ data.responseJSON.data.base_url + data.responseJSON.data.files.certificate+"' align='center' width='50%'/></td>";
+                    StudentInfo += "<tr><th scope = 'col' > Certificate Hash </th>";
+                    StudentInfo += "<td scope='col'><img src='" + data.responseJSON.data.base_url + data.responseJSON.data.file.certificate + "' align='center' width='50%'/></td></tr>";
 
 
-                    }
                 } else {
                     alert('Error Occured. Check Node logs.');
                 }
