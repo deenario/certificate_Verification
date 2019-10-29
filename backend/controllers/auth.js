@@ -333,7 +333,7 @@ exports.createStudent = async (req, res, next) => {
             "values ('" + firstName + "','" + lastName + "','" + createdAt + "','" + universityName + "','"+email+"','" + studentNumber + "','" + start_date + "','" + end_date + "','" + certificate + "',";
 
         let replacements = {
-            stuNumber: email,
+            stuNumber: studentNumber,
             firstname: firstName,
             lastname: lastName,
             uniName: universityName,
