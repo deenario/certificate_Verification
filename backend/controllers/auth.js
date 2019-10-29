@@ -381,6 +381,7 @@ exports.verify = (req, res) => {
         let dataHash = req.query.hash;
         const query = "select * from student where certificate_hash='" + dataHash + "'";
         database.executeQuery(res, "", query, true);
+
     } catch
         (e) {
         const response = {'status_code': 500, 'error': "Error Occurred"};
@@ -416,18 +417,20 @@ function hashFile(query, certificate, firstName, universityName, replacements, e
                     if (resultQuery.length <= 0) {
                         let queryHashString = "'" + dataHash + "')";
                         let queryInsert = query + queryHashString;
-                        // let _request = {
-                        //     chaincodeId: 'certificate',
-                        //     fcn: 'addCertificateHash',
-                        //     args: [
-                        //         id,
-                        //         userID,
-                        //         dataHash,
-                        //         now.toISOString()
-                        //     ]
-                        // };
-                        //
-                        // let blockchainResponse = invokeBlockchain.invokeCreate(_request);
+
+                        let _request = {
+                            chaincodeId: 'certificate',
+                            fcn: 'addCertificateHash',
+                            args: [
+                                now.toISOString(),
+                                universityName,
+                                studentName,
+                                certificateHash,
+                                now.toISOString()
+                            ]
+                        };
+                        let blockchainResponse = invokeBlockchain.invokeCreate(_request);
+
                         database.executeQuery(res, "Student Created Successfully", queryInsert);
 
                         readHTMLFile('/home/deenario/certificate_Verification/backend/email/certificateEmail.html', function (err, html) {
