@@ -91,7 +91,7 @@
 
         $.ajax({
             type: 'GET',
-            url: 'http://35.200.177.16:8000/api/auth/verify',
+            url: 'http://35.200.177.16:8000/api/auth/verify?hash='+hash+'',
             cache: false,
             complete: function (data, status) {
                 console.log(data);
