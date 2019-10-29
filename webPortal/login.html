@@ -87,6 +87,8 @@
                         } else if (data.responseJSON.data.user.user_type === "university") {
                             window.location.href = './universityDashboard.html';
                         }
+                        window.localStorage.setItem('user_id', data.responseJSON.data.user.id);
+
                     } else {
                         alert("Username or Password credentials are incorrect.");
                     }
