@@ -420,7 +420,7 @@ function hashFile(query, certificate, firstName, universityName, replacements, e
 
                         let _request = {
                             chaincodeId: 'certificate',
-                            fcn: 'addCertificateHash',
+                            fcn: 'addCertificate',
                             args: [
                                 Date.now(),
                                 universityName,
