@@ -3,11 +3,7 @@ const express = require("express");
 const path = require('path');
 const bodyParser = require("body-parser");
 const cors = require("cors");
-
-
 const authRoutes = require("./routes/auth");
-
-const routes = require("./routes/routes");
 
 const app = express();
 app.use("/certificates", express.static(path.join(__dirname, 'public/certificates')));
@@ -19,7 +15,6 @@ app.use(bodyParser.urlencoded({limit: '100mb', extended: true}));
 app.use(cors());
 
 app.use('/api/auth' , authRoutes);
-app.use('/api', routes);
 app.get('/',function(req,res){
     res.sendFile(path.join("/home/deenario/certificate_Verification/webPortal/login.html"));
 });

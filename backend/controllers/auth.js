@@ -302,11 +302,10 @@ exports.createUniversity = async (req, res, next) => {
         let name = req.body.name;
         let address = req.body.address;
         let number = req.body.number;
-        let email = req.body.email;
         let user_id = req.body.user_id;
 
-        let query = "insert into university (name, address, number , email, user_id) " +
-            "values ('" + name + "','" + address + "','" + number + "','" + email + "','" + user_id + "')";
+        let query = "insert into university (name, address, number , user_id) " +
+            "values ('" + name + "','" + address + "','" + number + "','" + user_id + "')";
         database.executeQuery(res, "University Successfully Created", query);
     } catch (e) {
         console.log(e);
@@ -335,7 +334,7 @@ exports.createStudent = async (req, res, next) => {
 
     } catch (e) {
         console.log(e);
-        const response = {'status_code': 500, 'error': "Internal Server Error"};
+        const response = {'status_code': 500, 'error': "File format Incorrect."};
         res.status(500).json(response);
     }
 };
@@ -356,7 +355,7 @@ exports.getUniversity = async (req, res, next) => {
     try {
         console.log("Get Admins API called");
         console.log(req.body);
-        const query = "Select university.name,university.address,university.number,university.email,user.email,user.status from university join user on university.user_id = user.id order by university.id desc";
+        const query = "Select university.name,university.address,university.number,user.email,user.status from university join user on university.user_id = user.id order by university.id desc";
         database.executeQuery(res, "", query);
     } catch (e) {
         const response = {'status_code': 500, 'error': "Internal Server Error"};
