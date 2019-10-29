@@ -41,7 +41,7 @@ module.exports = {
       var store_path = path.join(__dirname, '../hfc-key-store');
       console.log('Store path:'+store_path);
       var tx_id = null;
-      
+
       // create the key value store as defined in the fabric-client/config/default.json 'key-value-store' setting
       let user_from_store = await Fabric_Client.newDefaultKeyValueStore({ path: store_path
       }).then((state_store) => {
@@ -53,7 +53,7 @@ module.exports = {
         var crypto_store = Fabric_Client.newCryptoKeyStore({path: store_path});
         crypto_suite.setCryptoKeyStore(crypto_store);
         fabric_client.setCryptoSuite(crypto_suite);
-      
+
         // get the enrolled user from persistence, this user will sign all requests
         return fabric_client.getUserContext('user1', true);
       });
@@ -99,7 +99,7 @@ module.exports = {
         }
 
       } else {
-        console.log(proposalResponses[0].response.message.toString())
+        console.log(proposalResponses[0].response.message.toString());
         return {
           status: 500,
           message: proposalResponses[0].response.message.toString()
