@@ -99,7 +99,7 @@
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered"  width="100%" cellspacing="0">
+                        <table class="table table-bordered" width="100%" cellspacing="0">
                             <thead>
                             <tr>
                                 <th>Student Number</th>
@@ -206,11 +206,11 @@
                     </div>
                     <div class="form-group">
                         <label>Start Date</label>
-                        <input type="number" class="form-control my-2" id="startdate" placeholder="start Date">
+                        <input type="date" class="form-control my-2" id="startdate" placeholder="start Date">
                     </div>
                     <div class="form-group">
                         <label>End Date</label>
-                        <input type="number" class="form-control my-2" id="enddate" placeholder="End Date">
+                        <input type="date" class="form-control my-2" id="enddate" placeholder="End Date">
                     </div>
                     <div class="form-group">
                         <label for="certificate">Certificate</label>
@@ -246,6 +246,7 @@
 <script src="js/demo/datatables-demo.js"></script>
 
 <script>
+
     $(document).ready(function (e) {
 
         let StudentInfo = '';
@@ -254,46 +255,51 @@
             url: 'http://35.200.177.16:8000/api/auth/student',
             cache: false,
             complete: function (data, status) {
-              console.log(data);
+                console.log(data);
                 if (status === "success") {
                     for (let i = 0; i < data.responseJSON.data.files.length; i++) {
-                      StudentInfo += "<tr>";
-                      StudentInfo += "<td>" + data.responseJSON.data.files[i].student_number + "</td>";
-                      StudentInfo += "<td>" + data.responseJSON.data.files[i].firstname + "</td>";
-                      StudentInfo += "<td>" + data.responseJSON.data.files[i].university_name + "</td>";
-                      StudentInfo += "<td>" + data.responseJSON.data.files[i].start_date + "</td>";
-                      StudentInfo += "<td>" + data.responseJSON.data.files[i].end_date + "</td>";
-                      StudentInfo += "<td>" + data.responseJSON.data.files[i].certificate_hash + "</td>";
+                        StudentInfo += "<tr>";
+                        StudentInfo += "<td>" + data.responseJSON.data.files[i].student_number + "</td>";
+                        StudentInfo += "<td>" + data.responseJSON.data.files[i].firstname + "</td>";
+                        StudentInfo += "<td>" + data.responseJSON.data.files[i].university_name + "</td>";
+                        StudentInfo += "<td>" + data.responseJSON.data.files[i].start_date + "</td>";
+                        StudentInfo += "<td>" + data.responseJSON.data.files[i].end_date + "</td>";
+                        StudentInfo += "<td>" + data.responseJSON.data.files[i].certificate_hash + "</td>";
 
-                      StudentInfo += "</tr>"
+                        StudentInfo += "</tr>"
                     }
                 } else {
                     alert('Error Occured. Check Node logs.');
                 }
                 $("#studentInfo").append(StudentInfo);
-              StudentInfo = "";
+                StudentInfo = "";
             }
         });
 
         $("form.studentForm").on("submit", function (e) {
             e.preventDefault();
-            const stdNumber = $("input#stdNumber").val();
-            const stdFirstName = $("input#stdFirstName").val();
-            const stdLastName = $("input#stdLastName").val();
-            const UniName = $("input#stdUniName").val();
-            const startdate = $("input#startYear").val();
-            const enddate = $("input#endYear").val();
+            let formData = new FormData();
+            formData.append("firstname", $("input#stdFirstName").val());
+            formData.append("lastname", $("input#stdLastName").val());
+            formData.append("university_name", $("input#stdUniName").val());
+            formData.append("student_number", $("input#stdNumber").val());
+            formData.append("start_date", $("input#startdate").val());
+            formData.append("end_date", $("input#enddate").val());
+            formData.append("certificate", $('input[type=file]')[0].files[0], 'certificate');
 
             $.ajax({
                 type: "POST",
                 url: "http://35.200.177.16:8000/api/auth/student/create",
-                data: {
-                    firstname: stdFirstName,
-                    lastname: stdLastName,
-                    university_name: UniName,
-                    student_number: stdNumber,
-                    start_date: startdate,
-                    end_date: enddate,
+                data: formData,
+                contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                processData: false,
+                complete: function (data, status) {
+                    if (status === 'success') {
+                        alert("Student Added Successfully");
+                        window.location.href = './students.html';
+                    } else {
+                        alert(data.responseText);
+                    }
                 }
             });
         });

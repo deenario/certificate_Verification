@@ -200,7 +200,7 @@ exports.resetRequest = async (req, res, next) => {
                         if (err) {
                             console.log(err);
                         } else {
-                            const url =  token;
+                            const url = token;
                             let query = "update user set reset_token='" + token + "' where email='" + email + "' limit 1";
                             database.con.query(query, function (err, resultQuery) {
                                 if (err) {
@@ -340,7 +340,7 @@ exports.createStudent = async (req, res, next) => {
     }
 };
 
-exports.getStudents = async  (req, res, next) => {
+exports.getStudents = async (req, res, next) => {
     try {
         console.log("Get Admins API called");
         console.log(req.body);
@@ -366,49 +366,12 @@ exports.getUniversity = async (req, res, next) => {
 
 exports.verify = (req, res) => {
     try {
-        let filePath;
         console.log("BODY", req.body);
-        console.log("Verifier", verifier);
-        filePath = req.file.path;
-        console.log("FileBased", filePath);
-        console.log(filePath);
-
-        let algorithm = 'sha1';
-        let shasum = crypto.createHash(algorithm);
-        let s = fs.ReadStream(filePath);
-        s.on('data', function (data) {
-            shasum.update(data)
-        });
-        s.on('end', function () {
-            let dataHash = shasum.digest('hex');
-            const query = "select * from student where certificate_hash='" + dataHash + "'";
-            let _request = {
-                chaincodeId: 'whatthefake',
-                fcn: 'queryFileHash',
-                args: [
-                    dataHash
-                ]
-            };
-            database.con.query(query, function (err, resultQuery) {
-                if (err) {
-                    console.log(err);
-                } else {
-                    if (resultQuery.length > 0) {
-                        console.log(resultQuery.id);
-                        const Querylog = "INSERT INTO data_logs (data_id,verifier,created_at,user_id) " +
-                            "VALUES (" + resultQuery[0].id + ",'" + verifier + "','" + date + "'," + user_id + ")";
-                        database.con.query(Querylog, function (err, result) {
-                            if (err) {
-                                console.log(err);
-                            }
-                        });
-                    }
-                }
-            });
-            let blockchainresponse = queryBlockchain.invokeQuery(_request);
-            database.executeQuery(res, "", query, true);
-        });
-    } catch (e) {
+        let dataHash = req.body.hash;
+        const query = "select * from student where certificate_hash='" + dataHash + "'";
+        database.executeQuery(res, "", query, true);
+    } catch
+        (e) {
         const response = {'status_code': 500, 'error': "Error Occurred"};
         res.status(500).json(response);
         console.log(e);
