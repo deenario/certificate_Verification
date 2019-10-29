@@ -192,19 +192,20 @@
 
                 <form>
                     <div class="form-group">
-                        <label for="name">University Name</label>
+                        <label for="exampleInputEmail1">University Name</label>
                         <input class="form-control" id="name" type="text" placeholder="University Name">
                     </div>
                     <div class="form-group">
-                        <label for="address">Adress</label>
+                        <label for="exampleInputPassword1">Adress</label>
                         <input class="form-control" id="address" type="text" placeholder="Adress">
                     </div>
                     <div class="form-group">
-                        <label for="number">Contact Number</label>
+                        <label for="exampleInputPassword1">Contact Number</label>
                         <input class="form-control" id='number' type="text" placeholder="Contact Number">
                     </div>
+
                     <div class="form-group">
-                        <label for="univeristyAdmins">University Admin</label>
+                        <label for="exampleFormControlSelect1">University Admin</label>
                         <select class="form-control" id="univeristyAdmins" name="univeristyAdmins">
                             <option>Select Admin</option>
                         </select>
@@ -272,6 +273,7 @@
                         universityInfo += "<td>" + data.responseJSON.data.files[i].name + "</td>";
                         universityInfo += "<td>" + data.responseJSON.data.files[i].address + "</td>";
                         universityInfo += "<td>" + data.responseJSON.data.files[i].number + "</td>";
+                        universityInfo += "<td>" + data.responseJSON.data.files[i].email + "</td>";
                         universityInfo += "<td>" + data.responseJSON.data.files[i].status + "</td>";
                         universityInfo += "</tr>"
                     }

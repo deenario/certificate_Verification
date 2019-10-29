@@ -307,6 +307,7 @@ exports.createUniversity = async (req, res, next) => {
         let query = "insert into university (name, address, number , user_id) " +
             "values ('" + name + "','" + address + "','" + number + "','" + user_id + "')";
         database.executeQuery(res, "University Successfully Created", query);
+
     } catch (e) {
         console.log(e);
         const response = {'status_code': 500, 'error': "Internal Server Error"};
