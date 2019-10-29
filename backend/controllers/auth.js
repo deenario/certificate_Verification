@@ -422,10 +422,10 @@ function hashFile(query, certificate, firstName, universityName, replacements, e
                             chaincodeId: 'certificate',
                             fcn: 'addCertificateHash',
                             args: [
-                                now.toISOString(),
+                                Date.now(),
                                 universityName,
-                                studentName,
-                                certificateHash,
+                                firstName,
+                                dataHash,
                                 now.toISOString()
                             ]
                         };
