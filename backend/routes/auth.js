@@ -15,6 +15,6 @@ router.get("/university/admins",AuthController.getUniversityAdmins);
 router.get("/university",AuthController.getUniversity);
 router.post("/student/create",Files ,AuthController.createStudent);
 router.get("/student" ,AuthController.getStudents);
-router.post("/verify" ,AuthController.verify);
+router.get("/verify" ,AuthController.verify);
 
 module.exports = router;

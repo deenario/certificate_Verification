@@ -366,8 +366,8 @@ exports.getUniversity = async (req, res, next) => {
 
 exports.verify = (req, res) => {
     try {
-        console.log("BODY", req.body);
-        let dataHash = req.body.hash;
+        console.log("BODY", req.query);
+        let dataHash = req.query.hash;
         const query = "select * from student where certificate_hash='" + dataHash + "'";
         database.executeQuery(res, "", query, true);
     } catch
